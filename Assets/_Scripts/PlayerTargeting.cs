@@ -100,21 +100,32 @@ public class PlayerTargeting : MonoBehaviour
             getATarget = true;
         }
 
-        if ( PlayerMovement.Instance.Anim.GetCurrentAnimatorStateInfo ( 0 ).IsName ( "Idle" ) )
+        if ( getATarget && !JoystickMovement.Instance.isPlayerMoving)
+        {
+            transform.LookAt ( new Vector3 ( MonsterList[targetIndex].transform.position.x, transform.position.y, MonsterList[targetIndex].transform.position.z));
+            if (PlayerMovement.Instance.Anim.GetCurrentAnimatorStateInfo ( 0 ).IsName ( "Idle" ) )
             {
                 PlayerMovement.Instance.Anim.SetBool ( "Idle", false );
                 PlayerMovement.Instance.Anim.SetBool ( "Walk", false );
                 PlayerMovement.Instance.Anim.SetBool ( "Attack", true );
             }
-
-        
-        else if ( JoystickMovement.Instance.isPlayerMoving )
+        }
+        else if ( JoystickMovement.Instance.isPlayerMoving)
         {
             if ( !PlayerMovement.Instance.Anim.GetCurrentAnimatorStateInfo ( 0 ).IsName ( "Walk" ) )
             {
                 PlayerMovement.Instance.Anim.SetBool ( "Attack", false );
                 PlayerMovement.Instance.Anim.SetBool ( "Idle", false );
                 PlayerMovement.Instance.Anim.SetBool ( "Walk", true );
+            }
+        }
+        else 
+        {
+            if ( !PlayerMovement.Instance.Anim.GetCurrentAnimatorStateInfo ( 0 ).IsName ( "Idle" ) )
+            {
+                PlayerMovement.Instance.Anim.SetBool ( "Attack", false );
+                PlayerMovement.Instance.Anim.SetBool ( "Idle", true );
+                PlayerMovement.Instance.Anim.SetBool ( "Walk", false );
             }
         }
     }

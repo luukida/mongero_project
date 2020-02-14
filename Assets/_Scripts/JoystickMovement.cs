@@ -22,6 +22,8 @@ public class JoystickMovement : MonoBehaviour
         }
     }
 
+    public bool isPlayerMoving;
+
     private static JoystickMovement instance;
 
     public GameObject smallStick;
@@ -57,14 +59,16 @@ public class JoystickMovement : MonoBehaviour
 
         if(stickDistance < stickRadius)
         {
-            Debug.Log("if (stickRadius < 50)");
+            //Debug.Log("if (stickRadius < 50)");
             smallStick.transform.position = stickFirstPosition + joyVec * stickDistance;
         }
         else
         {
-            Debug.Log("else");
+            //Debug.Log("else");
             smallStick.transform.position = stickFirstPosition + joyVec * stickRadius;
         }
+
+        isPlayerMoving = true;
     }
 
     public void Drop ()
@@ -75,6 +79,8 @@ public class JoystickMovement : MonoBehaviour
         smallStick.transform.position = joystickFirstPosition;
         Debug.Log("Drop");
         //SetTrigger
+
+        isPlayerMoving = false;
     }
     
 
