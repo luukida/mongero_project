@@ -24,10 +24,12 @@ public class PlayerMovement : MonoBehaviour
 
     Rigidbody rb;
     public float moveSpeed = 10f;
+    public Animator Anim;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        Anim = GetComponent<Animator>();
     }
 
     
@@ -38,8 +40,12 @@ public class PlayerMovement : MonoBehaviour
 
         //Debug.Log ("moveHorizontal : " + moveHorizontal + " / moveVertical : " + moveVertical);
 
-        //rb.velocity = new Vector3 (moveHorizontal * moveSpeed, rb.velocity.y, moveVertical * moveSpeed);
-
-        rb.velocity = new Vector3 (JoystickMovement.Instance.joyVec.x, rb.velocity.y, JoystickMovement.Instance.joyVec.y) * moveSpeed;
+        rb.velocity = new Vector3 (moveHorizontal * moveSpeed, rb.velocity.y, moveVertical * moveSpeed);
+        
+        if (JoystickMovement.Instance.joyVec.x != 0 || JoystickMovement.Instance.joyVec.z != 0)
+        {
+            rb.velocity = new Vector3 (JoystickMovement.Instance.joyVec.x, rb.velocity.y, JoystickMovement.Instance.joyVec.y) * moveSpeed;
+            rb.rotation = Quaternion.LookRotation ( new Vector3 ( JoystickMovement.Instance.joyVec.x, 0, JoystickMovement.Instance.joyVec.y ) );
+        }
     }
 }
